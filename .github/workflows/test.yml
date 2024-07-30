@@ -1,0 +1,43 @@
+name: Tests
+
+on:
+  push:
+    branches: [ main, 'release/**', 'feature/**'  ]
+  pull_request:
+    branches: [ main, 'release/**', 'feature/**'  ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tests:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ macos-14 ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: print architecture
+        run: uname -m
+      - uses: actions/checkout@v4
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 22
+          cache: 'gradle'
+      - name: Cache Gradle packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle.kts') }}
+          restore-keys: ${{ runner.os }}-gradle
+      - name: Build, test & Analyse
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          gradle wrapper
+      - name: package
+        run: ./gradlew assemble --stacktrace
