@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
 	kotlin("jvm")
 	id("publish")
@@ -12,6 +14,7 @@ dependencies {
 kotlin {
 	compilerOptions {
 		allWarningsAsErrors = true
+		jvmTarget = JvmTarget.JVM_17
 	}
 }
 
@@ -37,4 +40,9 @@ tasks.named("processResources") {
 	if (Platform.os == Os.MacOs) dependsOn(copyNativeLibraryTask)
 }
 
+java {
+	toolchain {
+		languageVersion.set(JavaLanguageVersion.of(17))
+	}
+}
 

@@ -10,7 +10,7 @@ jreleaser {
     gitRootSearch = true
 
     project {
-        description = "Webgpu binding to kotlin multiplatform"
+        description = "Rococoa allows you to call Objective-C code through Java classes and interfaces that you define."
         copyright = "MIT"
     }
 
