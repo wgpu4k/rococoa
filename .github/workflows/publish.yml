@@ -16,7 +16,9 @@ jobs:
           java-version: 17
           cache: 'gradle'
       - name: Build and publish with Gradle
-        run: ./gradlew jreleaserConfig assemble publish jreleaserFullRelease --info
+        run: |
+          gradle wrapper
+          ./gradlew jreleaserConfig assemble publish jreleaserFullRelease --info
         env:
           SNAPSHOT: "false"
           VERSION: ${{ github.event.release.tag_name }}
