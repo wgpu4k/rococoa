@@ -1,0 +1,15 @@
+[versions]
+jna = "5.14.0"
+kotlin = "2.0.0"
+jreleaser = "1.13.1"
+cglib = "3.3.0"
+
+[libraries]
+jna = { module = "net.java.dev.jna:jna", version.ref = "jna" }
+jnaPlatform = { module = "net.java.dev.jna:jna-platform", version.ref = "jna" }
+jreleaser-plugin = { module = "org.jreleaser:org.jreleaser.gradle.plugin", version.ref = "jreleaser" }
+cglib = { module = "cglib:cglib", version.ref = "cglib" }
+
+[plugins]
+kotlinJvm = { id = "org.jetbrains.kotlin.jvm" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
