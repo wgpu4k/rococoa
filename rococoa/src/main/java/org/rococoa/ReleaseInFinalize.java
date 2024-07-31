@@ -25,8 +25,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ *
  * Marker to allow us to disable CFRelease'ing an id when its Java proxy is finalized.
- * <p/>
+ *
  * Only NSAutoreleasePool applies at the time of writing.
  */
 @Retention(RetentionPolicy.RUNTIME)

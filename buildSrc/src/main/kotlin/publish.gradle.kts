@@ -6,12 +6,14 @@ plugins {
     id("org.jreleaser")
 }
 
+val libraryDescription = "Rococoa allows you to call Objective-C code through Java classes and interfaces that you define."
+
 
 jreleaser {
     gitRootSearch = true
 
     project {
-        description = "Rococoa allows you to call Objective-C code through Java classes and interfaces that you define."
+        description = libraryDescription
         copyright = "MIT"
     }
 
@@ -47,10 +49,44 @@ jreleaser {
     }
 }
 
+
 publishing {
+    publications {
+        create<MavenPublication>("maven") {
+
+            from(components["java"])
+
+            pom {
+                name.set(project.name)
+                description.set(libraryDescription)
+                url.set("https://github.com/wgpu4k/rococoa")
+                inceptionYear.set("2024")
+                licenses {
+                    license {
+                        name.set("MIT")
+                        url.set("https://opensource.org/license/MIT")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("amommers")
+                        name.set("Alexandre Mommers")
+                    }
+                }
+                scm {
+                    connection.set("scm:git:https://github.com/wgpu4k/rococoa.git")
+                    developerConnection.set("scm:git:https://github.com/wgpu4k/rococoa.git")
+                    url.set("https://github.com/wgpu4k/rococoa")
+                }
+            }
+        }
+    }
+
+
     repositories {
         maven {
             if (isSnapshot()) {
+                logger.info("publishing is configure as snapshot")
                 name = "GitLab"
                 url = uri("https://gitlab.com/api/v4/projects/25805863/packages/maven")
                 credentials(HttpHeaderCredentials::class) {
@@ -61,7 +97,10 @@ publishing {
                     create<HttpHeaderAuthentication>("header")
                 }
             } else {
+                name = "Local"
+                logger.info("publishing is configure as release")
                 url = layout.buildDirectory.dir("staging-deploy").get().asFile.toURI()
+                logger.info("publishing path is ${url.path}")
             }
         }
     }
