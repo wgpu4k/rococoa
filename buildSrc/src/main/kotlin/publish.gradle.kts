@@ -1,3 +1,4 @@
+import org.jreleaser.model.api.deploy.maven.MavenCentralMavenDeployer.Stage
 import org.jreleaser.model.Active
 
 plugins {
@@ -15,18 +16,20 @@ jreleaser {
     }
 
     signing {
-        active.set(Active.ALWAYS)
+        active = Active.ALWAYS
         armored = true
         artifacts = true
     }
+
     deploy {
-        active.set(Active.ALWAYS)
+        active = Active.ALWAYS
         maven {
-            active.set(Active.ALWAYS)
+            active = Active.ALWAYS
             mavenCentral {
-                active.set(Active.ALWAYS)
-                this.create("sonatype") {
-                    active.set(Active.ALWAYS)
+                active = Active.ALWAYS
+                create("sonatype") {
+                    stage = Stage.UPLOAD
+                    active = Active.ALWAYS
                     url = "https://central.sonatype.com/api/v1/publisher"
                     stagingRepository("build/staging-deploy")
                 }
