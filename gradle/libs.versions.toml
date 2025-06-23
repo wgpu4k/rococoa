@@ -1,6 +1,6 @@
 [versions]
 jna = "5.17.0"
-kotlin = "2.1.21"
+kotlin = "2.2.0"
 jreleaser = "1.13.1"
 cglib = "3.3.0"
 
