@@ -1,5 +1,5 @@
 [versions]
-jna = "5.17.0"
+jna = "5.18.1"
 kotlin = "2.2.20"
 jreleaser = "1.13.1"
 cglib = "3.3.0"
